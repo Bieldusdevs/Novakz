@@ -1,11 +1,14 @@
 import { useEffect, useState, type ComponentProps } from "react"
-import Modal from "@/components/ui/modal"
-import Button from "./ui/button"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import rehypeRaw from "rehype-raw"
-
-const GITHUB_REPO = "Parcoil/Sparkle"
+import { Rocket, ExternalLink } from "lucide-react"
+import Modal from "@/components/ui/modal"
+import Button from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { GITHUB_REPO, CURRENT_VERSION } from "@/lib/version"
+import { openExternal } from "@/lib/ipc"
+import { formatDate } from "@/lib/utils"
 
 interface Release {
   tag_name: string
@@ -17,9 +20,9 @@ interface Release {
 
 type CodeProps = ComponentProps<"code"> & { inline?: boolean }
 
-function ChangelogContent({ body }: { body: string }) {
+function ChangelogContent({ body }: { body: string }): React.ReactNode {
   return (
-    <div className="prose prose-sm prose-green marker:text-sparkle-secondary max-w-none text-sparkle-text prose-headings:text-sparkle-text prose-a:text-blue-400 prose-code:bg-sparkle-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-code:font-normal prose-pre:bg-sparkle-card prose-pre:border prose-pre:border-sparkle-border prose-img:rounded-lg prose-img:border prose-img:border-sparkle-border">
+    <div className="prose prose-sm max-w-none text-muted prose-headings:text-fg prose-headings:font-semibold prose-strong:text-fg prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-code:rounded-md prose-code:bg-surface-2 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-[0.8em] prose-code:font-normal prose-code:before:content-none prose-code:after:content-none prose-pre:border prose-pre:border-line prose-pre:bg-surface-2 prose-li:marker:text-primary prose-img:rounded-xl prose-img:border prose-img:border-line prose-hr:border-line">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
@@ -28,40 +31,20 @@ function ChangelogContent({ body }: { body: string }) {
             <a
               {...props}
               href={href}
-              target="_blank"
-              rel="noopener noreferrer"
               onClick={(e) => {
                 e.preventDefault()
-                window.open(href, "_blank")
+                if (href) openExternal(href)
               }}
             >
               {children}
             </a>
           ),
-          img: ({ ...props }) => (
-            <img
-              {...props}
-              className="max-w-full h-auto rounded-lg border border-sparkle-border"
-              loading="lazy"
-            />
+          img: ({ ...props }) => <img {...props} loading="lazy" />,
+          code: ({ inline, className, children, ...props }: CodeProps) => (
+            <code className={className} {...props}>
+              {children}
+            </code>
           ),
-          code: ({ inline, className, children, ...props }: CodeProps) => {
-            if (inline) {
-              return (
-                <code
-                  className="bg-sparkle-primary px-1.5 py-0.5 rounded-md text-sm font-normal"
-                  {...props}
-                >
-                  {children}
-                </code>
-              )
-            }
-            return (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            )
-          },
         }}
       >
         {body}
@@ -70,69 +53,78 @@ function ChangelogContent({ body }: { body: string }) {
   )
 }
 
-export default function ChangelogModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [releases, setReleases] = useState<Release[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+export default function ChangelogModal({
+  open,
+  onClose,
+}: {
+  open: boolean
+  onClose: () => void
+}): React.ReactNode {
+  const [release, setRelease] = useState<Release | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
     if (!open) return
-    if (releases.length > 0) return
-
+    let cancelled = false
     setLoading(true)
-    setError(null)
-
-    fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases?per_page=10`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Failed to fetch releases (${res.status})`)
-        return res.json()
+    setFailed(false)
+    fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("request failed"))))
+      .then((data: Release) => {
+        if (!cancelled) setRelease(data)
       })
-      .then((data: Release[]) => {
-        setReleases(data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        setError(err instanceof Error ? err.message : "Failed to load changelog")
-        setLoading(false)
-      })
-  }, [open, releases.length])
+      .catch(() => !cancelled && setFailed(true))
+      .finally(() => !cancelled && setLoading(false))
+    return () => {
+      cancelled = true
+    }
+  }, [open])
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <div className="bg-sparkle-card border border-sparkle-border rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[80vh] flex flex-col">
-        <div className="flex items-center justify-between p-4 border-b border-sparkle-border shrink-0">
-          <h2 className="text-xl font-semibold text-sparkle-text">What's New</h2>
-          <Button variant="secondary" onClick={onClose}>
-            Close
-          </Button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-6">
-          {loading && <p className="text-sparkle-text-secondary">Loading changelog...</p>}
-          {error && (
-            <p className="text-red-500">
-              Failed to load changelog. Please check your internet connection.
-            </p>
+    <Modal
+      open={open}
+      onClose={onClose}
+      size="lg"
+      icon={<Rocket className="size-5" />}
+      title={`What's new in Sparkle ${release?.tag_name ?? `v${CURRENT_VERSION}`}`}
+      description={
+        release ? `Released ${formatDate(release.published_at)}` : "Fetching the latest release notes"
+      }
+      footer={
+        <>
+          {release && (
+            <Button
+              variant="ghost"
+              size="sm"
+              icon={<ExternalLink className="size-3.5" />}
+              onClick={() => openExternal(release.html_url)}
+            >
+              View on GitHub
+            </Button>
           )}
-          {!loading &&
-            !error &&
-            releases.map((release) => (
-              <div
-                key={release.tag_name}
-                className="border-b border-sparkle-border pb-4 last:border-b-0 last:pb-0"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-medium text-sparkle-text">
-                    {release.name || release.tag_name}
-                  </h3>
-                  <span className="text-sm text-sparkle-text-secondary">
-                    {new Date(release.published_at).toLocaleDateString()}
-                  </span>
-                </div>
-                <ChangelogContent body={release.body} />
-              </div>
-            ))}
+          <Button variant="primary" size="sm" onClick={onClose}>
+            Got it
+          </Button>
+        </>
+      }
+    >
+      {loading && (
+        <div className="space-y-3">
+          <Skeleton className="h-4 w-2/3" />
+          <Skeleton className="h-3 w-full" />
+          <Skeleton className="h-3 w-5/6" />
+          <Skeleton className="h-3 w-4/6" />
         </div>
-      </div>
+      )}
+      {!loading && failed && (
+        <p className="text-xs leading-relaxed">
+          Couldn’t reach GitHub right now. You’re running{" "}
+          <span className="text-fg">v{CURRENT_VERSION}</span> — check the releases page later for the
+          full changelog.
+        </p>
+      )}
+      {!loading && release && <ChangelogContent body={release.body || "No notes provided."} />}
     </Modal>
   )
 }

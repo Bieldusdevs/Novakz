@@ -1,0 +1,632 @@
+[
+  {
+    "name": "24-hour-clock",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Set 24-Hour Clock",
+    "risk": "safe",
+    "deepDescription": "Switches Windows to a true 24-hour time format by updating the user’s regional time settings in the registry, affecting taskbar, apps, and system timestamps. IF HAVING ISSUES WITH TASKBAR, RESTART EXPLORER WITHIN SETTINGS",
+    "description": "Changes clock to display 24-hour format.",
+    "category": [
+      "General",
+      "Appearance"
+    ]
+  },
+  {
+    "name": "align-taskbar-left",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Align Taskbar Left",
+    "risk": "safe",
+    "deepDescription": "Forces the Windows taskbar to align left by editing the system registry. by setting the 'TaskbarAl' registry value to 0",
+    "description": "Aligns the taskbar to the left side of the screen.",
+    "category": [
+      "General",
+      "Appearance"
+    ]
+  },
+  {
+    "name": "debloat-windows",
+    "psapply": "#",
+    "psunapply": "",
+    "title": "Debloat Windows",
+    "risk": "safe",
+    "description": "Choose between Sparkle Debloat script or Raphire's Win11Debloat script to remove built-in Windows apps and bloatware.",
+    "reversible": false,
+    "updatedversion": "2.14.0",
+    "recommended": true,
+    "top": true,
+    "deepDescription": "The user can choose between two methods to debloat Windows:\n\n 1. Sparkle Custom Selective Script: This method allows users to select which apps they want to keep. A WPF Window is presented where users can check or uncheck apps from a list.\n\n 2. Raphire's Win11Debloat Script: This method uses a well-known script that removes a wide range of built-in Windows apps and features. It is comprehensive and suitable for users who want a quick and effective way to debloat their system.\n\n Both remove bloatware and improve privacy by removing unnecessary Microsoft components, but they cater to different user preferences regarding control and convenience.",
+    "modal": "Sparkle has 2 debloat methods:\n\n- Sparkle Debloat Script: Lets you pick which apps to keep.\n- Raphire's Script: Removes most built-in Windows apps quickly.\n\nBoth remove bloatware and improve privacy.",
+    "category": [
+      "Performance",
+      "Privacy"
+    ],
+    "links": [
+      {
+        "name": "Debloat Windows Script (Raphire)",
+        "url": "https://github.com/Raphire/Win11Debloat"
+      },
+      {
+        "name": "Use Sparkle Debloat Script without Sparkle",
+        "url": "https://getsparkle.net/debloat"
+      },
+      {
+        "name": "Sparkle Debloat Script",
+        "url": "https://github.com/Parcoil/Sparkle/blob/v2/resources/tweaks/debloat-windows/apply.ps1"
+      }
+    ]
+  },
+  {
+    "name": "detailed-bsod",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Detailed BSOD",
+    "risk": "safe",
+    "category": [
+      "General"
+    ],
+    "updatedversion": "2.21.1",
+    "description": "Adds detailed information to the Blue Screen of Death (BSOD) screen",
+    "deepDescription": "Enables detailed technical information on the Blue Screen of Death by setting DisplayParameters to 1 in the CrashControl registry."
+  },
+  {
+    "name": "disable-background-ms-store-apps",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Background MS Store apps",
+    "risk": "safe",
+    "category": [
+      "Performance",
+      "Privacy"
+    ],
+    "description": "Disables Microsoft Store apps from running in the background",
+    "deepDescription": "Disables all background activity for modern UWP apps by setting 'GlobalUserDisabled' to 1 under the current user's BackgroundAccessApplications registry key, creating the key if it doesn't exist."
+  },
+  {
+    "name": "consumer-features",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Consumer Features",
+    "risk": "safe",
+    "description": "Prevents Windows from automatically installing games, third-party apps, or app links from the Microsoft Store.",
+    "reversible": true,
+    "modal": "Disabling consumer features may make some default apps inaccessible (e.g., Phone Link). Are you sure?",
+    "category": [
+      "Privacy"
+    ],
+    "warning": "Some default apps may become inaccessible.",
+    "addedversion": "2.14.1",
+    "deepDescription": "This tweak disables Windows Consumer Features, preventing automatic installation of Microsoft Store apps, games, or links. Useful for reducing bloatware and controlling which apps are installed."
+  },
+  {
+    "name": "disable-copilot",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Copilot",
+    "risk": "safe",
+    "category": [
+      "Performance",
+      "Privacy"
+    ],
+    "recommended": true,
+    "description": "Removes Microsoft's Copilot feature. (will fail if copilot is not installed)",
+    "deepDescription": "Finds and removes all installed Microsoft Copilot-related AppX packages for all users by filtering package names with 'Microsoft.Copilot'"
+  },
+  {
+    "name": "disable-core-isolation",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Core Isolation",
+    "risk": "caution",
+    "category": [
+      "Performance",
+      "Gaming"
+    ],
+    "restart": true,
+    "description": "Disables Core Isolation Memory Integrity to improve system performance",
+    "deepDescription": "Creates the registry path for Hypervisor-Enforced Code Integrity under DeviceGuard if missing, and disables HVCI by setting Enabled to 0 in the system-wide registry."
+  },
+  {
+    "name": "disable-defender-rtp",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Defender RTP",
+    "risk": "risky",
+    "category": [
+      "Performance",
+      "General"
+    ],
+    "description": "Disables Defender Real-time Protection",
+    "deepDescription": "Sets the Defender policy DisableRealtimeMonitoring to true, instructing Windows Security to stop actively scanning files and processes in real time. For better performance"
+  },
+  {
+    "name": "disable-dynamic-ticking",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Dynamic Ticking",
+    "risk": "risky",
+    "category": [
+      "Performance"
+    ],
+    "warning": "May increase power consumption",
+    "description": "Improves system responsiveness and reduces latency by disabling dynamic timer ticks.",
+    "deepDescription": "Deep Description:  \nDisables Windows Dynamic Ticking by setting `disabledynamictick` to `yes` using `bcdedit`, which prevents the system timer from stopping to reduce input latency and improve responsiveness."
+  },
+  {
+    "name": "disable-fast-startup",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Fast Startup",
+    "risk": "safe",
+    "category": [
+      "Performance",
+      "General"
+    ],
+    "description": "Disables Windows Fast Startup to improve system stability",
+    "deepDescription": "Disables Windows Fast Startup by setting HiberbootEnabled to 0, preventing the system from using hybrid hibernation during shutdown for a full clean boot."
+  },
+  {
+    "name": "disable-gamebar",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Gamebar",
+    "risk": "caution",
+    "warning": "Do not enable this if you have a X3D cpu. read docs for more info",
+    "description": "Disables The Xbox gamebar ",
+    "docs_warning": "Do not enable this if you have a X3D cpu Example: AMD Ryzen 7 9800X3D as it allocates the 3d vcache cores to the game running. Disabling game bar stops this",
+    "modal": "Do not enable this if you have a X3D cpu Example: AMD Ryzen 7 9800X3D as it allocates the 3d vcache cores to the game running. Disabling game bar stops this",
+    "deepDescription": "Attempts to remove Xbox Gaming Overlay using Remove-AppxPackage, with a fallback to winget, to eliminate background Xbox services and overlays that can consume CPU, RAM, and GPU resources, improving system performance and reducing in-game interruptions.",
+    "category": [
+      "Performance"
+    ]
+  },
+  {
+    "name": "disable-hibernation",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Hibernation",
+    "risk": "caution",
+    "category": [
+      "Performance",
+      "General"
+    ],
+    "warning": "Not Recommended for laptops!",
+    "description": "Disables the hibernation feature to free up disk space and improve shutdown speed",
+    "deepDescription": "Disables hibernation by turning it off at the system level with powercfg.exe, which frees up disk space by deleting hiberfil.sys and can improve shutdown speed."
+  },
+  {
+    "name": "disable-location-tracking",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Location Tracking",
+    "risk": "safe",
+    "category": [
+      "Privacy"
+    ],
+    "recommended": true,
+    "updatedversion": "2.21.1",
+    "description": "Disables Windows location tracking.",
+    "deepDescription": "Disables location access (including the Location service and sensor permissions) and telemetry data collection (including the DiagTrack service) by setting the relevant registry policies, reducing background data collection and giving you more control over the system."
+  },
+  {
+    "name": "disable-lockscreen-tips",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Lockscreen Tips",
+    "risk": "safe",
+    "description": "Disables tips on the lockscreen.",
+    "category": [
+      "General"
+    ]
+  },
+  {
+    "name": "disable-mouse-acceleration",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Mouse Acceleration",
+    "risk": "safe",
+    "modal": "This overrides the default mouse acceleration settings in Windows.",
+    "description": "Disables mouse acceleration for a more consistent and precise mouse movement experience. Great for gaming",
+    "deepDescription": "Disables Windows mouse acceleration by setting MouseSpeed, MouseThreshold1, and MouseThreshold2 to 0, enabling consistent and linear cursor movement for improved precision.",
+    "category": [
+      "Performance",
+      "Gaming"
+    ]
+  },
+  {
+    "name": "disable-rdp-warnings",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable RDP Warnings for Unsigned Files",
+    "risk": "caution",
+    "description": "Suppresses Windows security warnings when opening unsigned Remote Desktop (.rdp) files.",
+    "reversible": true,
+    "modal": "This disables Microsoft's new RDP file security warnings introduced in April 2026. Unsigned RDP files from unknown publishers will connect without warning. Only disable if you understand the security risks.",
+    "category": [
+      "General",
+      "Privacy"
+    ],
+    "warning": " RDP files have been abused in attacks, it is strongly recommended to keep these protections enabled..",
+    "addedversion": "2.19.0",
+    "links": [
+      {
+        "name": "Microsoft adds Windows protections for malicious Remote Desktop files",
+        "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-adds-windows-protections-for-malicious-remote-desktop-files/"
+      }
+    ]
+  },
+  {
+    "name": "disable-windows-recall",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Windows Recall",
+    "risk": "safe",
+    "description": "Disables the Windows Recall feature for better privacy.",
+    "category": [
+      "Privacy"
+    ],
+    "reversible": true,
+    "restart": true,
+    "deepDescription": "This tweak sets AllowRecallEnablement to 0 under HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI, disabling Windows Recall at the system level.",
+    "addedversion": "2.14.2"
+  },
+  {
+    "name": "disable-taskbar-seach",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Taskbar Search",
+    "risk": "safe",
+    "description": "Hides the search box from the taskbar.",
+    "category": [
+      "General",
+      "Appearance"
+    ],
+    "deepDescription": "Disables the search box on the Windows taskbar by setting 'SearchboxTaskbarMode' to 0 under HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Search. Explorer is restarted to apply the change.",
+    "addedversion": "2.22.0"
+  },
+  {
+    "name": "disable-telemetry",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Telemetry",
+    "risk": "safe",
+    "recommended": true,
+    "addedversion": "2.14.0",
+    "updatedversion": "2.21.1",
+    "top": true,
+    "description": "Disables Windows telemetry and data collection for improved privacy and performance.",
+    "deepDescription": "Disables Windows telemetry by modifying registry keys to prevent data collection and reporting to ~~Microsoft~~ Microslop. This tweak was previously in sparkle but was removed issues with the tweak not applying correctly. It has been re-added.",
+    "category": [
+      "Privacy",
+      "Performance"
+    ]
+  },
+  {
+    "name": "disable-wifi-sense",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Wifi Sense",
+    "risk": "safe",
+    "category": [
+      "Privacy",
+      "Network",
+      "General"
+    ],
+    "description": "Disables Wifi Sense to prevent sharing of Wi-Fi networks with contacts",
+    "deepDescription": "Disables Wi-Fi Sense features by setting related policy values to 0, preventing automatic connection to open hotspots and blocking location-based Wi-Fi hotspot reporting to enhance privacy and reduce unwanted background activity"
+  },
+  {
+    "name": "enable-dark-mode",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Enable Dark Mode",
+    "risk": "safe",
+    "category": [
+      "General",
+      "Appearance"
+    ],
+    "description": "Enables dark mode for Windows. Great for unactivated systems.",
+    "deepDescription": "Enables dark mode for system UI and apps by setting theme values to 0, then restarts Explorer to apply the change — also works on unactivated Windows systems where personalization settings are normally locked."
+  },
+  {
+    "name": "enable-end-task-right-click",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Enable End Task With Right Click",
+    "risk": "safe",
+    "category": [
+      "General"
+    ],
+    "recommended": true,
+    "description": "Enables the \"End Task\" option in the taskbar context menu",
+    "deepDescription": "Enables the \"End Task\" option in the Windows 11 taskbar right-click menu by setting TaskbarEndTask to 1, allowing users to kill unresponsive apps directly from the taskbar without opening Task Manager."
+  },
+  {
+    "name": "enable-game-mode",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Enable Game Mode",
+    "risk": "safe",
+    "category": [
+      "General",
+      "Performance",
+      "Gaming"
+    ],
+    "description": "Enables Game Mode on windows",
+    "deepDescription": "Enables the game mode feature on windows to improve performance and reduce latency. altough it not all users see a performance boost or may even cause worse performance. its recommended to test with and without to see if it works for you.",
+    "links": [
+      {
+        "name": "Game Mode (Microsoft)",
+        "url": "https://support.xbox.com/en-US/help/games-apps/game-setup-and-play/use-game-mode-gaming-on-pc"
+      }
+    ]
+  },
+  {
+    "name": "enable-hags",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Enable HAGS",
+    "risk": "safe",
+    "category": [
+      "Performance",
+      "Gaming",
+      "GPU"
+    ],
+    "description": "Enables HAGS (Hardware Accelerated GPU Scheduling)",
+    "deepDescription": "Hardware-Accelerated GPU Scheduling (HAGS) is a Windows feature that shifts more GPU management and scheduling tasks from the CPU to the GPU, reducing CPU overhead and potentially improving performance and latency"
+  },
+  {
+    "name": "enable-optimization-for-windowed-games",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Enable Optimization For Windowed Games",
+    "risk": "safe",
+    "category": [
+      "General",
+      "Performance",
+      "Gaming"
+    ],
+    "restart": true,
+    "description": "Enables Optimization For Windowed Games on windows",
+    "deepDescription": "Enables Optimization For Windowed Games on Windows"
+  },
+  {
+    "name": "hide-taskview-and-widgets",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Hide Taskview and Widgets",
+    "risk": "safe",
+    "deepDescription": "Disables both the Task View button and the Widgets panel by updating the user's Explorer taskbar settings in the registry, removing the icons and preventing them from appearing on the taskbar.",
+    "description": "Hides the Taskview and Widgets buttons on the taskbar.",
+    "category": [
+      "General",
+      "Appearance"
+    ],
+    "modal": "This will REMOVE the Windows Widgets feature entirely.\n\nTo restore it later, you will need to run:\nwinget install 9MSSGKG348SP\n\nor search 'Windows Web Experience Pack' in the Microsoft Store."
+  },
+  {
+    "name": "menu-show-delay-zero",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Menu Show Delay Zero",
+    "risk": "safe",
+    "deepDescription": "Reduces the menu show delay to 0ms for faster UI response by editing the 'MenuShowDelay' registry key.",
+    "description": "Removes the delay when opening menus.",
+    "category": [
+      "Performance",
+      "Appearance"
+    ]
+  },
+  {
+    "name": "optimize-network-settings",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Optimize Network Settings",
+    "risk": "safe",
+    "category": [
+      "Network",
+      "Gaming"
+    ],
+    "restart": true,
+    "updatedversion": "2.9.0",
+    "description": "Changes various Windows settings to improve network latency and speeds.",
+    "deepDescription": "Applies a comprehensive set of netsh TCP/IP tweaks to disable latency-inducing features, enable fast open, offload networking tasks to hardware, fine-tune congestion control, and set optimal MTU, all to maximize speed, reduce CPU load, and improve responsiveness for gaming and high-performance internet use."
+  },
+  {
+    "name": "optimize-nvidia-settings",
+    "psapply": "#",
+    "psunapply": "",
+    "title": "Optimize Nvidia Settings",
+    "risk": "safe",
+    "modal": "You can revert these changes in the Nvidia control panel (be sure to open nvidia control panel at least once) ",
+    "reversible": false,
+    "deepDescription": "This Changes the following NVIDIA Control Panel settings:\n\n- Image Scaling → Off\n- Ambient Occlusion → Off\n- Anisotropic Filtering → Application-controlled\n- Antialiasing – FXAA → Off\n- Antialiasing – Gamma Correction → Off\n- Antialiasing – Mode → Application-controlled\n- CUDA – GPUs → All\n- DSR Factors → Off\n- Low Latency Mode → On\n- Max Frame Rate → Off\n- Multi-Frame Sampled AA (MFAA) → Off\n- OpenGL Rendering GPU → Use NVIDIA GPU\n- Power Management Mode → Prefer Maximum Performance\n- Shader Cache Size → Unlimited\n- Texture Filtering – Anisotropic Sample Optimization → On\n- Texture Filtering – Negative LOD Bias → Allow\n- Texture Filtering – Quality → High Performance\n- Texture Filtering – Trilinear Optimization → On\n- Threaded Optimization → On\n- Triple Buffering → Off\n- Vertical Sync → Off\n- Virtual Reality pre-rendered frames → 1",
+    "category": [
+      "Performance",
+      "GPU",
+      "Gaming"
+    ],
+    "description": "Changes Nvidia Control Panel settings to improve gaming performance"
+  },
+  {
+    "name": "remove-edge",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Remove Microsoft Edge",
+    "risk": "caution",
+    "deepDescription": "Removes Microsoft Edge from Windows by uninstalling it.",
+    "recommended": true,
+    "top": true,
+    "description": "Removes Microsoft Edge from Windows.",
+    "warning": "Removing Microsoft Edge may cause issues with windows services/apps that rely on it.",
+    "category": [
+      "System",
+      "Privacy"
+    ],
+    "addedversion": "2.22.0"
+  },
+  {
+    "name": "remove-gaming-apps",
+    "psapply": "#",
+    "psunapply": "",
+    "title": "Remove Gaming Apps",
+    "risk": "caution",
+    "description": "Removes Xbox app, Xbox Game Bar, and Xbox Game Overlay",
+    "reversible": false,
+    "modal": "You can reinstall these apps in the Microsoft Store. Look for these in the Microsoft Store: 'Xbox Game Bar and Xbox App'",
+    "category": [
+      "Performance",
+      "Privacy"
+    ],
+    "links": [
+      {
+        "name": "Reinstall Xbox App",
+        "url": "https://apps.microsoft.com/detail/9mv0b5hzvk9z"
+      }
+    ]
+  },
+  {
+    "name": "remove-ms-bing-integration",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Remove Microsoft Bing Integration",
+    "risk": "safe",
+    "description": "Removes Bing apps and disables Bing web search in Windows Search.",
+    "deepDescription": "Removes all Microsoft Bing apps (News, Weather, Finance, etc.) and disables Bing web search results from appearing in Windows Search. This improves privacy and speeds up local searches.",
+    "category": [
+      "Privacy",
+      "Performance"
+    ],
+    "reversible": true,
+    "modal": "This will remove all Bing apps (News, Weather, etc.) and disable Bing web search in Windows Search.\n\nTo restore, you can reinstall apps from the Microsoft Store."
+  },
+  {
+    "name": "remove-onedrive",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Remove OneDrive",
+    "risk": "caution",
+    "category": [
+      "Performance",
+      "General",
+      "Privacy"
+    ],
+    "description": "Removes OneDrive from the system",
+    "deepDescription": "Uses registry, file system, and process commands to uninstall OneDrive, clean leftovers, and restore defaults—freeing RAM, CPU, and I/O by eliminating its background sync and startup tasks.",
+    "modal": "This will remove OneDrive from your system. You can reinstall it later if needed. this also moves onedrive files to your home folder"
+  },
+  {
+    "name": "revert-context-menu",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Revert Context Menu",
+    "risk": "safe",
+    "category": [
+      "General",
+      "Appearance"
+    ],
+    "recommended": true,
+    "description": "Reverts the context menu to the default Windows 10 context menu.",
+    "deepDescription": "Creates a blank InprocServer32 key under a specific CLSID to disable the modern right-click context menu in Windows 11, restoring the classic one and improving responsiveness in File Explorer."
+  },
+  {
+    "name": "set-powershell7-default",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Set PowerShell 7 as Default",
+    "risk": "safe",
+    "description": "Sets PowerShell 7 as the default profile in Windows Terminal (installs PS7 if missing)",
+    "modal": "This tweak will change your Windows Terminal default profile from Windows PowerShell 5 to PowerShell 7. PowerShell 7 will be installed automatically if it is not already present.",
+    "category": [
+      "General"
+    ],
+    "deep-description": "This tweak modifies the **Windows Terminal settings.json** to make PowerShell 7 the default profile instead of Windows PowerShell 5. If PowerShell 7 is not installed, it will be installed automatically via `winget`. You can undo this tweak at any time to revert back to PowerShell 5 as the default."
+  },
+  {
+    "name": "set-services-to-manual",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Set Services to Manual",
+    "risk": "caution",
+    "category": [
+      "Performance",
+      "Gaming"
+    ],
+    "recommended": true,
+    "updatedversion": "2.21.1",
+    "description": "Sets various Windows services to Manual startup type to improve performance.",
+    "deepDescription": "Modifies the startup type of selected Windows services using Set-Service to disable or delay non-essential processes, reducing boot time, CPU usage, RAM consumption, and background activity for improved overall performance."
+  },
+  {
+    "name": "set-time-utc",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Set Time To UTC",
+    "risk": "safe",
+    "category": [
+      "General"
+    ],
+    "description": "Sets the system time to UTC, Great for dual booting",
+    "deepDescription": "changes the system time to UTC"
+  },
+  {
+    "name": "set-win32-priority-separation",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Set Win32 Priority Separation",
+    "risk": "safe",
+    "deepDescription": "Sets the 'Win32PrioritySeparation' registry key to optimize foreground process priority, improving perceived responsiveness.",
+    "description": "Optimizes foreground app performance by modifying system process priority behavior.",
+    "category": [
+      "Performance"
+    ]
+  },
+  {
+    "name": "show-seconds-in-taskbar-clock",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Show Seconds in Taskbar Clock",
+    "risk": "safe",
+    "description": "Enables the seconds next to the clock in the taskbar",
+    "deep-description": "Enables seconds display in the Windows taskbar clock by setting the `ShowSecondsInSystemClock` registry key.\n\n**Requires Explorer restart.**",
+    "reversible": true,
+    "restart": true,
+    "category": [
+      "Appearance",
+      "General"
+    ]
+  },
+  {
+    "name": "ultimate-performance-plan",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Ultimate Performance Power Plan",
+    "risk": "caution",
+    "description": "Enables And Applies The Windows Ultimate Powerplan for better performance",
+    "deepDescription": "Enables the Ultimate Performance power plan by creating it if missing, retrieving its GUID, and activating it to maximize system responsiveness and performance by preventing power-saving limitations.",
+    "recommended": true,
+    "top": true,
+    "category": [
+      "Performance",
+      "Gaming"
+    ]
+  },
+  {
+    "name": "wpbt",
+    "psapply": "#",
+    "psunapply": "#",
+    "title": "Disable Windows Platform Binary Table",
+    "risk": "caution",
+    "description": "Prevents your computer vendor from executing programs at boot, reducing potential security risks.",
+    "reversible": true,
+    "modal": "Disabling WPBT prevents vendors from running programs on boot. Confirm you want to apply this tweak?",
+    "category": [
+      "Privacy"
+    ],
+    "warning": "Some vendor software may not run at startup.",
+    "restart": true,
+    "deepDescription": "Windows Platform Binary Table (WPBT) allows manufacturers to execute software each boot, including drivers or anti-theft software. Disabling WPBT improves security by blocking this mechanism.",
+    "addedversion": "2.14.1"
+  }
+]
