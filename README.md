@@ -170,11 +170,28 @@ cd Sparkle</code></pre>
   </li>
   <br/>
   <li>
+    <b>Preview the UI in a browser (no Electron needed):</b>
+    <pre><code>pnpm dev:web</code></pre>
+    <i>Runs only the renderer on <code>http://localhost:5173</code>. The IPC bridge falls back to a demo data layer, so every screen stays interactive — perfect for working on the interface.</i>
+  </li>
+  <br/>
+  <li>
     <b>Build for production:</b>
     <pre><code>pnpm build</code></pre>
     <i>This will compile Sparkle, Builds are located in <code>dist/</code> folder. you may be prompted if you want to update the tweak registry. This is only for production builds</i>
   </li>
 </ol>
+
+### Interface
+
+The renderer uses a token based design system ("Aurora") built on **React 19 + Tailwind CSS v4 + Zustand + React Router**:
+
+- `src/renderer/src/app.css` – theme tokens (6 themes: Midnight, Daylight, Nebula, Graphite, Classic, System) and shared utilities (`glass`, `aurora`, `scroll-area`, …)
+- `src/renderer/src/components/ui/*` – reusable primitives (Button, Card, Modal, Switch, Badge, Input, Progress, Skeleton, Page shell)
+- `src/renderer/src/lib/ipc.ts` – typed IPC helper (`invoke` / `send` / `on`) with an automatic browser fallback
+- `src/renderer/src/pages/*` – one file per screen, all wired to the existing main process handlers
+
+Run `pnpm test` to execute the main process unit tests plus the renderer smoke tests that mount every route.
  <br/>
   <p align="center">Made with ❤️ by Parcoil</p>
 
